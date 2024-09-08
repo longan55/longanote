@@ -1,38 +1,21 @@
 <template>
-    <h1 style="text-align: center;"><slot>{{ title }}</slot></h1>
+    <h1 style="text-align: center;"><slot>{{props.title}}</slot></h1>
     <div class="editor">
       <!-- <textarea class="input" :value="input" @input="update"></textarea> -->
-      
       <div class="output" v-html="output"></div>
     </div>
 </template>
 
 <script setup>
 import { marked } from 'marked'
-import { debounce } from 'lodash-es'
-import { ref, computed} from 'vue'
+import {computed} from 'vue'
+// import { debounce } from 'lodash-es'
 
-// const title = ref('这是标题')
-// const title = props.title
-const input = ref('#### 欢迎来到longanote')
-const props = defineProps({
-    title: {
-        type: String,
-        default: "",
-    },
-    content: {
-      type: String,
-      default: "",
-    }
-})
+const props = defineProps(['title','content'])
 const output = computed(() => marked(props.content))
-
-const update = debounce((e) => {
-  input.value = e.target.value
-}, 100)
-
-
-
+// const update = debounce((e) => {
+//   input.value = e.target.value
+// }, 100)
 </script>
 
 <style>

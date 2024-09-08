@@ -1,13 +1,13 @@
 <script setup>
-// import ref from 'vue'
+import {ref} from 'vue'
 import Menu from './components/menu.vue';
 import Content from './components/content.vue';
 
-
-// const title = ref('这是默认标题')
-// const content = ref('### 这是默认内容')
+const title = ref('Longanote');
+const content = ref('### 欢迎来到Longanote!');
 const handleClick = (val) => {
-    console.log('val',val)
+  title.value = val.Title
+  content.value = val.Content
 }
 </script>
 
@@ -18,7 +18,7 @@ const handleClick = (val) => {
   </div>
   </div>
   <div class="content">
-    <Content title="1111111", content="#### 欢迎来到longanote!!!" ></Content>
+    <Content :title="title", :content="content" ></Content>
   </div>
 </template>
 

@@ -5,7 +5,7 @@
       <div v-if="parent.child != null" v-for="son in parent.child">
         <div v-if="son.child != null">
           <a-sub-menu :key=son.title :title=son.title>
-            <a-menu-item v-for="grandson in son.child" :key=grandson.title @click="onClick">{{ grandson.title }}</a-menu-item>
+            <a-menu-item v-for="grandson in son.child" :key=grandson.title @click="GetArticle(grandson.path)">{{ grandson.title }}</a-menu-item>
           </a-sub-menu>
         </div>
         <div v-else>
@@ -19,17 +19,7 @@
 <script setup>
 import { ref, onMounted, defineEmits} from 'vue';
 import axios from 'axios';
-// import {
-//   IconMenuFold,
-//   IconMenuUnfold,
-//   IconApps,
-//   IconBug,
-//   IconBulb,
-// } from '@arco-design/web-vue/es/icon';
 const emits = defineEmits(["click"])
-const onClick = () => {
-    emits("click",'123')
-}
 var items = ref([])
 onMounted(async () => {
   try {
@@ -45,10 +35,7 @@ onMounted(async () => {
   }
 });
 
-
 async function GetArticle(path) {
-  console.log(path)
-  console.log("11111111")
   try {
     const response = await axios.post('http://127.0.0.1:9000/getArticle', new URLSearchParams({
       path: path,
@@ -57,14 +44,11 @@ async function GetArticle(path) {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
-    emit('dataFetched', response.data);
+    emits('click', response.data);
   } catch (error) {
     console.error('Error sending data:', error);
   }
 }
-
-
-
 </script>
 
 <style scoped></style>
